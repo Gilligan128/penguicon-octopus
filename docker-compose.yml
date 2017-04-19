@@ -1,0 +1,19 @@
+version: '2'
+services:
+ go_server:
+  image: 'gocd/gocd-server'
+  ports:
+   - "8153:8153"
+   - "8154:8154"
+ go_agent_dev:
+  image: 'gocd/gocd-agent-ubuntu-16.04:v17.3.0'
+  links:
+   - go_server
+  environment:
+   - GO_SERVER_URL=https://go_server:8154/go
+ go_agent_prod:
+  image: 'gocd/gocd-agent-ubuntu-16.04:v17.3.0'
+  links:
+   - go_server
+  environment:
+   - GO_SERVER_URL=https://go_server:8154/go
